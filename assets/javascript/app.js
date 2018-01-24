@@ -45,15 +45,17 @@ var category = $("#event-category").val();
 $(document).ready(function() {
   $('select').material_select();
 });
-
+// //Empty form before next search
+// $(".input-field").clear();
+//Empty table before populating with new event information
+$("#event-table").empty();
 // ================  queryURL using $ajax ======================
 var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events/search?app_key=54CPdHQQ4wTp4fM7&location=" + location+ "&date="+ date + "&category" + category + "&limit=10";
   $.ajax({
     url: queryURL,
     method: "GET"
   }).done(function(response) {
-
-    for (var i=0; i<5; i++){
+    for (var i=0; i<10; i++){
       console.log(JSON.parse(response));
       //Find Longitude and Latitude of the event
       eventLat[i] = JSON.parse(response).events.event[i].latitude;
@@ -72,7 +74,7 @@ var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events
       //Event Name
       eventName[i]= JSON.parse(response).events.event[i].title;
       //$("#eventName").text("Event name information for the table:  " + eventName[i]);   
-      
+
       var row = $("<tr class='event-row'>")
         .append($("<td>" + [i+1] + "</td>"))
         .append ($("<td>" + dateSelector[i] + "</td>"))
@@ -86,7 +88,7 @@ var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events
       row.append($("<td>").append(pickedEvent[i]));
       $("#event-table").append(row);
     }; 
-
+    
     clickMyEvent();
   });
   //print arrays of Lattitude and Longitude
