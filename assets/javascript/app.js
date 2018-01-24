@@ -23,9 +23,6 @@ function clickMyEvent(){
   });
 }
 
-
-
-
 //================== Lodash Error Handling ==================================
 //function parseLodash(str){
 //return _.attempt(JSON.parse.bind(null, str));
@@ -74,19 +71,21 @@ var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events
       //$("#moreInfo").text("Event URL information for the table:  " + moreInfo[i]);
       //Event Name
       eventName[i]= JSON.parse(response).events.event[i].title;
-      //$("#eventName").text("Event name information for the table:  " + eventName[i]);
+      //$("#eventName").text("Event name information for the table:  " + eventName[i]);   
       
-      $("#event-table > tbody").append("<tr><td>" + [i+1] + "</td><td>" + dateSelector[i] + "</td><td>" +
-    + "</td><td>" + eventName[i] + "</td><td>" + moreInfo[i]+"</td><td>" + "hello" + "</td></tr>");
-    
-
-      pickedEvent[i] = $("<button>" );    
-      pickedEvent[i].addClass("myEvent");
-      pickedEvent[i].text("Go to #" + (i+1) + " event");
-      pickedEvent[i].attr("data-LatValue", eventLat[i]);
-      pickedEvent[i].attr("data-LngValue", eventLng[i]);
-      $("#events").append(pickedEvent[i]);
-    };
+      var row = $("<tr class='event-row'>")
+        .append($("<td>" + [i+1] + "</td>"))
+        .append ($("<td>" + dateSelector[i] + "</td>"))
+        .append($("<td>" + eventName[i] + "</td>"))
+        .append($("<td>" + moreInfo[i] + "</td>"))
+        // .append($("<td>" + [i+1] + "</td>"));
+        pickedEvent[i]=$("<button>").addClass("myEvent");
+        pickedEvent[i].attr("data-LatValue", eventLat[i]);
+        pickedEvent[i].attr("data-LngValue", eventLng[i]);
+        pickedEvent[i].text("Go to #" + (i+1) + " event");
+      row.append($("<td>").append(pickedEvent[i]));
+      $("#event-table").append(row);
+    }; 
 
     clickMyEvent();
   });
@@ -184,5 +183,11 @@ function displayLyft(){
 //=======================
  setTimeout(displayLyft, 22000);
 
-
+ //Display fare estimate in button once user selects an event from table
+ //======================
+// $(".myEvent").on("click", function(){
+//   $("#lyft-web-button-parent").empty();
+//   console.log("Div Emptied");
+//   displayLyft();
+// });
 
