@@ -1,7 +1,7 @@
 var eventLat=[];
 var eventLng=[];
 var dateSelector=[];
-var moreInfo=[];
+var eventVenue=[];
 var eventName=[];
 var coords=[];
 var map;
@@ -69,17 +69,18 @@ var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events
       dateSelector[i] = JSON.parse(response).events.event[i].start_time;
       //$("#eventDate").text("Event date information for the table:  " + dateSelector[i]);
       //Print URL of the event -CHANGE TO LINK?
-      moreInfo[i]= JSON.parse(response).events.event[i].venue_url;
-      //$("#moreInfo").text("Event URL information for the table:  " + moreInfo[i]);
+      eventVenue[i]= JSON.parse(response).events.event[i].venue_name;
+      //$("#eventVenue").text("Event URL information for the table:  " + eventVenue[i]);
       //Event Name
       eventName[i]= JSON.parse(response).events.event[i].title;
+      // console.log("Event name = " eventName[i]);
       //$("#eventName").text("Event name information for the table:  " + eventName[i]);   
 
       var row = $("<tr class='event-row'>")
         .append($("<td>" + [i+1] + "</td>"))
         .append ($("<td>" + dateSelector[i] + "</td>"))
         .append($("<td>" + eventName[i] + "</td>"))
-        .append($("<td>" + moreInfo[i] + "</td>"))
+        .append($("<td>" + eventVenue[i] + "</td>"))
         // .append($("<td>" + [i+1] + "</td>"));
         pickedEvent[i]=$("<button>").addClass("myEvent");
         pickedEvent[i].attr("data-LatValue", eventLat[i]);
