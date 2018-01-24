@@ -3,6 +3,7 @@ var eventLng=[];
 var dateSelector=[];
 var eventVenue=[];
 var eventName=[];
+var cityName=[];
 var coords=[];
 var map;
 var latLng;
@@ -23,10 +24,15 @@ function clickMyEvent(){
   });
 }
 
+$(document).ready(function() {
+  $("#event-date").material_select();
+  
+});
+
 //================== Lodash Error Handling ==================================
-//function parseLodash(str){
-//return _.attempt(JSON.parse.bind(null, str));
-//}
+function parseLodash(str){
+  return _.attempt(JSON.parse, str);
+}
 //================== on-click AJAX Call ==================================
 $("#find-event").on("click", function(event) {
   // prevent event default behavior
@@ -34,17 +40,18 @@ $("#find-event").on("click", function(event) {
   //wait x seconds until the data from Ajax loads and then show the map
   setTimeout(initMap, 4000);
 //=============== Search Form Inputs  ============================
+
 var location = $("#location-input").val().trim();
-console.log(location);
+//console.log(location);
+
 var date = $("#event-date").val();
-// console.log(date)
+//alert("You chose" + date);
+
 var category = $("#event-category").val();
-// console.log(category)
+//alert("You chose" + category);
+
 
 //============ Search Form Jquery Menus  =========================
-$(document).ready(function() {
-  $('select').material_select();
-});
 // //Empty form before next search
 // $(".input-field").clear();
 //Empty table before populating with new event information
@@ -55,37 +62,66 @@ var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events
     url: queryURL,
     method: "GET"
   }).done(function(response) {
-    for (var i=0; i<10; i++){
-      console.log(JSON.parse(response));
+    
+    for (var i=0; i<5; i++){
+
+      // console.log(JSON.parse(response));
+      var event = parseLodash(response);
+      if (_.isError(event)) {
+        console.log('Error parsing JSON:', event);
+      }
+
       //Find Longitude and Latitude of the event
-      eventLat[i] = JSON.parse(response).events.event[i].latitude;
+      eventLat[i] = parseLodash(response).events.event[i].latitude;
       // console.log("Lat of event " + [i+1] + " = " + eventLat[i]);
+      if (_.isError(eventLat[i])) {
+        console.log('Error parsing JSON:', eventLat[i]);
+      }
       eventLat.push(eventLat[i]);
-      eventLng[i] = JSON.parse(response).events.event[i].longitude;
+
+      eventLng[i] = parseLodash(response).events.event[i].longitude;
+      if (_.isError(eventLng[i])) {
+        console.log('Error parsing JSON:', eventLng[i]);
+      }
       // console.log("Lng of event " + [i+1] + " = " + eventLng[i]);
       eventLng.push(eventLng[i]);
+
       //================ Table Population ===============================
       //Print date
-      dateSelector[i] = JSON.parse(response).events.event[i].start_time;
-      //$("#eventDate").text("Event date information for the table:  " + dateSelector[i]);
-      //Print URL of the event -CHANGE TO LINK?
-      eventVenue[i]= JSON.parse(response).events.event[i].venue_name;
-      //$("#eventVenue").text("Event URL information for the table:  " + eventVenue[i]);
-      //Event Name
-      eventName[i]= JSON.parse(response).events.event[i].title;
-      // console.log("Event name = " eventName[i]);
-      //$("#eventName").text("Event name information for the table:  " + eventName[i]);   
+      dateSelector[i] = parseLodash(response).events.event[i].start_time;
+      if (_.isError(dateSelector[i])) {
+        console.log('Error parsing JSON:', dateSelector[i]);
+      }
 
+      //Print URL of the event -CHANGE TO LINK?
+      eventVenue[i]= parseLodash(response).events.event[i].venue_name;
+      if (_.isError(eventVenue[i])) {
+        console.log('Error parsing JSON:', eventVenue[i]);
+      }
+    
+      //Event Name
+      eventName[i]= parseLodash(response).events.event[i].title;
+      if (_.isError(eventName[i])) {
+        console.log('Error parsing JSON:', eventName[i]);
+      }
+
+      cityName[i] = JSON.parse(response).events.event[i].city_name;
+      if (_.isError(cityName[i])) {
+        console.log('Error parsing JSON:', cityName[i]);
+      }
+      
       var row = $("<tr class='event-row'>")
         .append($("<td>" + [i+1] + "</td>"))
         .append ($("<td>" + dateSelector[i] + "</td>"))
         .append($("<td>" + eventName[i] + "</td>"))
         .append($("<td>" + eventVenue[i] + "</td>"))
+        .append($("<td>" + cityName[i] + "</td>"))
         // .append($("<td>" + [i+1] + "</td>"));
-        pickedEvent[i]=$("<button>").addClass("myEvent");
-        pickedEvent[i].attr("data-LatValue", eventLat[i]);
-        pickedEvent[i].attr("data-LngValue", eventLng[i]);
-        pickedEvent[i].text("Go to #" + (i+1) + " event");
+
+      pickedEvent[i]=$("<button>").addClass("myEvent");
+      pickedEvent[i].attr("data-LatValue", eventLat[i]);
+      pickedEvent[i].attr("data-LngValue", eventLng[i]);
+      pickedEvent[i].text("Go to #" + (i+1) + " event");
       row.append($("<td>").append(pickedEvent[i]));
       $("#event-table").append(row);
     }; 
