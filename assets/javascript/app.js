@@ -26,7 +26,7 @@ function clickMyEvent(){
 
 $(document).ready(function() {
   $("#event-date").material_select();
-  
+  $("#event-category").material_select();
 });
 
 //================== Lodash Error Handling ==================================
@@ -48,7 +48,7 @@ var date = $("#event-date").val();
 //alert("You chose" + date);
 
 var category = $("#event-category").val();
-//alert("You chose" + category);
+console.log(category)
 
 
 //============ Search Form Jquery Menus  =========================
