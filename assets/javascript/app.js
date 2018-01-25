@@ -14,25 +14,23 @@ var infoWindow;
 var pickedEvent=[];
 var pickedLat;
 var pickedLng;
-
+//====================Get a lyft click event==========================
 function clickMyEvent(){
-
-  $(".myEvent").on("click", function() {
-      pickedLat = ($(this).attr("data-LatValue"));
-      pickedLng = ($(this).attr("data-LngValue"));
-      console.log("My event latitude: " + pickedLat + "My event longitude: " + pickedLng);
-      // ($(this).attr("id", "lyft-web-button-parent"));
-      $(this).replaceWith("<button id='lyft-web-button-parent'>");
-      // console.log("Lyft button ID added");
-      displayLyft();
+  $(".myEvent").on("click", function(){
+    $(this).replaceWith("<button id='lyft-web-button-parent'>");
+    console.log("Id added");
+    pickedLat = ($(this).attr("data-LatValue"));
+    pickedLng = ($(this).attr("data-LngValue"));
+    console.log("My event latitude: " + pickedLat + "My event longitude: " + pickedLng);
+    displayLyft();
+    $("#lyft-web-button-parent").removeAttr("id");
+    console.log("Id removed");
   });
-}
-
+};
 $(document).ready(function() {
   $("#event-date").material_select();
   $("#event-category").material_select();
 });
-
 //================== Lodash Error Handling ==================================
 function parseLodash(str){
   return _.attempt(JSON.parse, str);
@@ -43,23 +41,25 @@ $("#find-event").on("click", function(event) {
   event.preventDefault();
   //wait x seconds until the data from Ajax loads and then show the map
   setTimeout(initMap, 4000);
-//=============== Search Form Inputs  ============================
-var location = $("#location-input").val().trim();
-//console.log(location);
-var date = $("#event-date").val();
-//alert("You chose" + date);
-var category = $("#event-category").val();
-console.log(category)
-//============ Search Form Jquery Menus  =========================
-// //Empty form before next search
-// $(".input-field").clear();
-//Empty table before populating with new event information
-$("#event-table").empty();
-//Add table head back to table
-var thead = $("<tr><th>Number</th><th>Date & Time</th><th>Name of Event</th><th>Venue</th><th>City Name</th></tr>");
-$("#event-table").append(thead);
-// ================  queryURL using $ajax ======================
-var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events/search?app_key=54CPdHQQ4wTp4fM7&location=" + location+ "&date="+ date + "&category" + category + "&limit=10";
+  //=============== Search Form Inputs  ============================
+  var location = $("#location-input").val().trim();
+  //console.log(location);
+  var date = $("#event-date").val();
+  //alert("You chose" + date);
+  var category = $("#event-category").val();
+  console.log(category)
+  //============ Search Form Jquery Menus  =========================
+  // //Empty form before next search
+  $("#location-input").val(" ");
+  // $("#event-date").val("Today");
+  // $("#event-category").
+  //Empty table before populating with new event information
+  $("#event-table").empty();
+  //Add table head back to table
+  var thead = $("<tr><th>Number</th><th>Date & Time</th><th>Name of Event</th><th>Venue</th><th>City Name</th></tr>");
+  $("#event-table").append(thead);
+  // ================  queryURL using $ajax ======================
+  var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events/search?app_key=54CPdHQQ4wTp4fM7&location=" + location+ "&date="+ date + "&category" + category + "&limit=10";
   $.ajax({
     url: queryURL,
     method: "GET"
@@ -113,7 +113,7 @@ var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events
       pickedEvent[i].attr("id", "event" + [i]);
       pickedEvent[i].attr("data-LatValue", eventLat[i]);
       pickedEvent[i].attr("data-LngValue", eventLng[i]);
-      pickedEvent[i].text("Get a Lyft!");
+      pickedEvent[i].text("View my Lyft!");
       row.append($("<td>").append(pickedEvent[i]));
       $("#event-table").append(row);
     }; 
@@ -126,7 +126,7 @@ function initMap() {
     zoom: 10,
     center: new google.maps.LatLng(eventLat[0], eventLng[0]),
   });
-  for (var i=0; i<5; i++){
+  for (var i=0; i<10; i++){
   latLng = new google.maps.LatLng(eventLat[i], eventLng[i]);
   marker = new google.maps.Marker({
       position: latLng,
