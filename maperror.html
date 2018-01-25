@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>-->
+ <meta name="viewport" content="width=device-width, initial-scale=1"/>
+ <title>Sortir!</title>
+
+ <!-- CSS  -->
+ <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ <link href="assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
+ <link href="assets/css/style.css" type="text/css" rel="stylesheet" > <!--media="screen,projection"/>-->
+</head>
+<body>
+ 
+ 
+
+ 
+
+<!-- search code -->
+<div id="map"><h1>MAP GOES HERE</h1></div>
+
+<div class="container">
+     <div id="event-view"></div>
+     
+       <form id="search-form">
+
+         <label for="event-input">Enter location of the event!</label>
+         <input type="text" id="location-input"><br> 
+
+         <label for="sel1">Enter date of the event</label>
+           <select class="form-control" id="date-input">
+             <option value=Today>Today</option>
+               <option value=ThisWeek>This Week</option>
+               <option value=NextWeek>Next week</option>
+           </select> 
+
+         <input id="find-event" type="submit" value="Event Search">
+       </form>
+
+     <div id="eventDate">Date = </div>
+
+     <div id="eventName">Name = </div>  
+
+     <div id="moreInfo">URL = </div>
+
+     <br>
+     <br>
+
+   <div id="myMap">
+    <style type="text/css">
+     #map {
+        height: 100%;
+      }
+    </style>
+   </div>
+
+   <div id="myLat"></div>
+
+   <div id="myLng"></div>
+
+ </div>
+
+   <!-- search CODE-->
+
+         <!--Date Search-->
+        <!--  <input type="text" class="datepicker">
+         
+          <nav>
+           <div class="nav-wrapper">
+             <form>
+               <div class="input-field">
+                 <input id="search" type="search" required>
+                 <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                 <i class="material-icons">close</i>
+               </div>
+             </form>
+           </div>
+         </nav>
+         </div>
+       </div> -->
+
+       
+ 
+
+ 
+ <!--  Scripts-->
+ 
+
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApu_fsoWF0jqAI5bZVZ5hiWvibSNrFmms&callback=initMap"
+
+ async defer></script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <!--
+ <script src="assets/javascript/materialize.js"></script>-->
+ <!--<script src="assets/javascript/init.js"></script><-->
+ <script src="assets/javascript/app.js"></script>
+
+
+ </body>
+</html>
