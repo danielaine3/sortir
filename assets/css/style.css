@@ -1,9 +1,11 @@
 body{
 	margin: 10px;
 }
+
 nav-wrapper{
 	margin:10px;
 }
+
 nav ul a,
 nav .brand-logo {
   color: #444;
@@ -52,7 +54,6 @@ p {
   font-size:16px;
   line-height: 1;
   margin:5px;
-
 }
 
 #myModal {
@@ -78,6 +79,7 @@ p {
     position: absolute;
     top: 40%;
   }
+
   #index-banner .section {
     top: 10%;
   }
@@ -92,11 +94,10 @@ p {
 .icon-block {
   padding: 0 15px;
 }
+
 .icon-block .material-icons {
   font-size: inherit;
 }
-
-
 
 #map {
   height: 400px;
@@ -107,6 +108,7 @@ p {
 #lyft-web-button-parent {
   min-height: 100px;
 }
+
 footer.page-footer {
   margin: 0;
   text-align:left;
@@ -117,16 +119,11 @@ footer.page-footer {
 }
 
 #events {
-  
   color: teal;
-  
   z-index: 1;
 }
 
-
-
 .myEvent {
   width: 250px;
-  height: 50px;
-  
+  height: 50px; 
 }
