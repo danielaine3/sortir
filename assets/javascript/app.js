@@ -13,7 +13,6 @@ var eventName=[];     //Event Name Array
 var cityName=[];      //Event City Array
 //Map Variables
 
-//var coords=[];
 var map;              //Map
 var latLng;           //Map API variable
 var marker;           //Map API marker
