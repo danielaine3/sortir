@@ -1,9 +1,11 @@
 var eventLat=[];
 var eventLng=[];
-var dateSelector=[];
+var dateSelector=[]
+var zipCode=[];
 var eventVenue=[];
 var eventName=[];
 var cityName=[];
+var locat="";
 var coords=[];
 var map;
 var latLng;
@@ -36,30 +38,39 @@ function parseLodash(str){
   return _.attempt(JSON.parse, str);
 }
 //================== on-click AJAX Call ==================================
-$("#find-event").on("click", function(event) {
+function validateForm() {
+  var x = document.forms["myForm"]["fname"].value;
+  
+  if (x == "") {
+      alert("Location must be filled out");
+      return false;
+    }
+    
+  else {
+
+  locat=x;
+  alert("My location " + locat);
+
+
   // prevent event default behavior
   event.preventDefault();
   //wait x seconds until the data from Ajax loads and then show the map
   setTimeout(initMap, 4000);
   //=============== Search Form Inputs  ============================
-  var location = $("#location-input").val().trim();
-  //console.log(location);
+ 
   var date = $("#event-date").val();
-  //alert("You chose" + date);
+  alert("You chose" + date);
   var category = $("#event-category").val();
-  console.log(category)
+  alert("You chose"+category)
   //============ Search Form Jquery Menus  =========================
-  // //Empty form before next search
-  $("#location-input").val(" ");
-  // $("#event-date").val("Today");
-  // $("#event-category").
+  
   //Empty table before populating with new event information
   $("#event-table").empty();
   //Add table head back to table
   var thead = $("<tr><th>Number</th><th>Date & Time</th><th>Name of Event</th><th>Venue</th><th>City Name</th></tr>");
   $("#event-table").append(thead);
   // ================  queryURL using $ajax ======================
-  var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events/search?app_key=54CPdHQQ4wTp4fM7&location=" + location+ "&date="+ date + "&category" + category + "&limit=10";
+  var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events/search?app_key=54CPdHQQ4wTp4fM7&location=" + locat+ "&date="+ date + "&category" + category + "&limit=10";
   $.ajax({
     url: queryURL,
     method: "GET"
@@ -102,6 +113,7 @@ $("#find-event").on("click", function(event) {
         console.log('Error parsing JSON:', cityName[i]);
       }
 
+
       // var thead = $("<tr><th>Number</th><th>Date & Time</th><th>Name of Event</th><th>Venue</th><th>City Name</th></tr>");
       var row = $("<tr class='event-row'>")
         .append($("<td>" + [i+1] + "</td>"))
@@ -119,7 +131,8 @@ $("#find-event").on("click", function(event) {
     }; 
     clickMyEvent();
   });
-});
+}
+}
 //================== Display events on GoogleMap =============================
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
