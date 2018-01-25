@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -9,28 +10,35 @@
   <link href="assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="assets/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
 </head>
+
 <body>
+
+
+  <!--==================== NAV BAR ======================-->
+
   <nav class="white" role="navigation">
     <div class="nav-wrapper container">
       <!-- Sortir Logo #1-->
       <a id="logo-container" href="#Sortir!" class="brand-logo">Sortir</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="#location-input">Search</a></li>
         <li><a href="#map">Map</a></li>
-        <li><a href="#table">Event List</a></li>
-        <li><a href=".page-footer">Contact Us</a></li>
+        <li><a href="#event-table">Event List</a></li>
       </ul>  
     </div>
   </nav>
-  <!-- LARGE BANNER #1 with image -->
+
+
+  <!-- ===============LARGE BANNER with image #1=========-->
+
+
   <div id="index-banner" class="parallax-container">
     <div class="section no-pad-bot">
       <div class="container">
         <br><br>
-      <!-- Sortir Logo #2-->
+        <!-- Sortir Logo #2-->
         <h1 class="header center white-text text-darken-5" id="Sortir!">Sortir</h1>
         <div class="row center">
-          <h6 class="header col s12 light">Find Your Fun - Pour votre Plaisir</h6>
+          <h6 class="header col s12 light instructions">Pour Votre Plaisir!</h6><h6 class="header col s12 light instructions">Find Your Fun!</h6>
         </div>
         <div class="container i-container">
           <div class="row center">
@@ -58,7 +66,9 @@
     </div>
     <div class="parallax"><img id="MSPimage" src="assets/images/background1.jpg" alt="Minneapolis Skyline"></div>
   </div>
-<!-- =========== SEARCH FORM =====================-->
+
+
+<!-- ================= SEARCH FORM =====================-->
 
   <div class="container z-depth-3">
     <div id="event-view">
@@ -75,7 +85,7 @@
              <div class="container">
                  <div class="row center">
                    <div class="col  s12 light">
-                     <h4 class="header">Please enter the location of the event!</h4>
+                     <h4 class="header">Please enter location of the event!</h4>
                    </div>
                  </div>
                </div>
@@ -84,7 +94,9 @@
         </div>
 
         <!-- City Search Input -->
+
         <div class="row">
+
           <div class="input-field col s4">
             <label>Enter a City:</label>
             <input type="text"  name="fname">
@@ -104,7 +116,9 @@
             </select>
             <label>Select a Date:</label>
           </div>
-          <!-- Category Selector -->  
+
+          <!-- Category Selector --> 
+
           <div class="input-field col s4">
             <select id="event-category" multiple>
               <option value="Art">Art</option>
@@ -124,16 +138,22 @@
             </select>
             <label>Select Categories:</label>
           </div>
+
         </div>
+
+        <!--Serch button-->
+
         <div class="row center-align">
           <input class="btn-large waves-effect waves-light teal lighten-1"  type="submit"  value="Submit">
         </div>
+
       </form>
     </div>
   </div> 
-  <!-- Submit AJAX Button --> 
+
            
-  <!--====== LARGE BANNER #2 with image ======= -->
+  <!--=========== LARGE BANNER #2 with image ============= -->
+
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">
       <div class="container">
@@ -144,13 +164,21 @@
     </div>
     <div class="parallax"><img src="assets/images/background2.jpg" alt="Vikings Players"></div>
   </div>
-  <!--================= MAP ===================== -->
+
+
+  <!--===================== MAP ========================= -->
+
   <div id="map"></div>
-  <!--=================== TABLE ==================-->
+
+
+  <!--==================== TABLE =========================-->
+
+
   <div class="container">
     <div class="section">
       <div class="row">
         <div class="col s12 center">
+
           <!--Table will populate here-->
           <table class="striped" id="event-table">
             <thead>
@@ -165,6 +193,7 @@
             <tbody>
             </tbody>
           </table>
+
         </div>
       </div>
       <div class="row">
@@ -172,7 +201,10 @@
       </div>
     </div>
   </div>
-  <!--====== LARGE BANNER #3 with image ======= -->
+
+
+  <!--============ LARGE BANNER with image #3 ============ -->
+
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">
       <div class="container">
@@ -182,7 +214,10 @@
     </div>
     <div class="parallax"><img src="assets/images/background3.jpg" alt="Spoon and Cherry"></div>
   </div>
-  <!--===============FOOTER WORKS=======-->
+
+
+  <!--================= FOOTER ============================-->
+
   <footer class="page-footer teal">
     <div class="container center">
       <div class="row">
@@ -227,6 +262,7 @@
   <script src="assets/javascript/materialize.js"></script>
   <!--Init.js-->
   <script src="assets/javascript/init.js"></script>
+
   </body>
 </html>
 
