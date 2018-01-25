@@ -59,16 +59,20 @@
     <div class="parallax"><img id="MSPimage" src="assets/images/background1.jpg" alt="Minneapolis Skyline"></div>
   </div>
 <!-- =========== SEARCH FORM =====================-->
+
   <div class="container z-depth-3">
     <div id="event-view">
-      <form class="col s12 m4" id="search-form">
+      <form class="col s12 m4" name="myForm" action="" onsubmit="return validateForm()" method="post">
+
         <!-- City Search Input -->
         <div class="row">
           <div class="input-field col s4">
-            <input id="location-input" type="text" class="validate">
-            <label for="event-input">Enter a City</label>
+            Enter a City
+            <input type="text"  name="fname">
           </div>
+
           <!--Date Selector-->
+
           <div class="input-field col s4">
             <select class="Drop-down" id="event-date">
               <option value="Today">Today</option>
@@ -100,13 +104,14 @@
             <label>Select Categories:</label>
           </div>
         </div>
+        
+          <input class="btn-large waves-effect waves-light teal lighten-1"  type="submit"  value="Submit">
+       
       </form>
     </div>
   </div> 
   <!-- Submit AJAX Button --> 
-  <div class="row center-align">
-    <div class="btn-large waves-effect waves-light teal lighten-1" id="find-event" type="submit" value="Event Search">Submit</div>
-  </div>          
+           
   <!--====== LARGE BANNER #2 with image ======= -->
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">
