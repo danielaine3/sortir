@@ -7,8 +7,8 @@
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="assets/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="assets/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
 </head>
 
 <body>
@@ -21,7 +21,7 @@
         <li><a href="#location-input">Search</a></li>
         <li><a href="#map">Map</a></li>
         <li><a href="#table">Event List</a></li>
-        <li><a href="#lyft-web-button-parent">Lyft</a></li>
+<!--         <li><a href="#lyft-web-button-parent">Lyft</a></li> -->
         <li><a href=".page-footer">Contact Us</a></li>
       </ul>  
     </div>
@@ -92,20 +92,20 @@
           <!-- Category Selector -->  
           <div class="input-field col s4">
             <select id= "event-category" multiple>
-              <option value="Concert">Concert</option>
-              <option value="Festival">Festival</option>
-              <option value="Family">Family</option>
               <option value="Art">Art</option>
               <option value="Comedy">Comedy</option>
-              <option value="Gallery">Gallery</option>
-              <option value="Museum">Museum</option>
-              <option value="Technology">Technology</option>
+              <option value="Concert">Concert</option>
+              <option value="Family">Family</option>
+              <option value="Festival">Festival</option>
               <option value="Food">Food</option>
-              <option value="Sports">Sports</option>
+              <option value="Gallery">Gallery</option>
               <option value="Movies">Movies</option>
+              <option value="Museum">Museum</option>
               <option value="Nightlife">Nightlife</option>
               <option value="Outdoors">Outdoors</option>
               <option value="Science">Science</option>
+              <option value="Sports">Sports</option>
+              <option value="Technology">Technology</option>
             </select>
             <label>Select Categories:</label>
           </div>
@@ -116,8 +116,7 @@
   <!-- Submit AJAX Button --> 
   <div class="row center-align">
     <div class="btn-large waves-effect waves-light teal lighten-1" id="find-event" type="submit" value="Event Search">Submit</div>
-  </div>
-            
+  </div>          
   <!--====== LARGE BANNER #2 with image ======= -->
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">
@@ -129,20 +128,8 @@
     </div>
     <div class="parallax"><img src="assets/images/background2.jpg" alt="Vikings Players"></div>
   </div>
-
   <!--================= MAP ===================== -->
   <div id="map"></div>
-  <div class="container">
-    <div id="event-view"></div>
-    <!--
-    <div id="eventDate">Date = </div>
-    <div id="eventName">Name = </div>  
-    <div id="moreInfo">URL = </div>
-    -->
-    <div id="myLat"></div>
-    <div id="myLng"></div>
-  </div> 
-
   <!--=================== TABLE ==================-->
   <div class="container">
     <div class="section">
@@ -180,26 +167,26 @@
     </div>
     <div class="parallax"><img src="assets/images/background3.jpg" alt="Spoon and Cherry"></div>
   </div>
-
 <!--Lyft Button Container-->
-  <div class="container">
+<!--   <div class="container">
     <div class="section">
       <div class="row">
         <div class="col s12 center" id="lyft-web-button-parent"></div>
       </div>
     </div>
-  </div>
-
+  </div> -->
   <!--===============FOOTER WORKS=======-->
   <footer class="page-footer teal">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
-          <li><a class="white-text" href="#Sortir!">Home</a></li>
+          <p>Site Map</p>
+          <ul>
+            <li><a class="white-text" href="#Sortir!">Home</a></li>
             <li><a class="white-text" href="#location-input">Search</a></li>
             <li><a class="white-text" href="#map">Map</a></li>
             <li><a class="white-text" href="#table">Event List</a></li>
-            <li><a class="white-text" href="#lyft-web-button-parent">Lyft</a></li>
+<!--             <li><a class="white-text" href="#lyft-web-button-parent">Lyft</a></li> -->
             <li><a class="white-text" href=".page-footer">Contact Us</a></li>
           </ul>
         </div>
@@ -220,14 +207,19 @@
       </div>
     </div>
   </footer>
-
   <!--  Scripts-->
+  <!--Lodash-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+  <!--Google Maps-->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApu_fsoWF0jqAI5bZVZ5hiWvibSNrFmms&callback=initMap"
     async defer></script>
+  <!--JQuery-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <!--App.js-->
   <script src="assets/javascript/app.js"></script>
+  <!--Materialize-->
   <script src="assets/javascript/materialize.js"></script>
+  <!--Init.js-->
   <script src="assets/javascript/init.js"></script>
   </body>
 </html>
