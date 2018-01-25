@@ -25,9 +25,20 @@ h1 {
   margin:-10px;
 }
 
+h5 {
+  margin:0;
+  font-size:30px; 
+  text-decoration:underline;
+}
+
 h6 {
   font-size: 20px;
 }
+
+.container{
+  margin-top:10px;
+}
+
 
 .i-container {
   background-color:teal;
@@ -36,14 +47,9 @@ h6 {
 
 #how-it-works {
   margin:0;
-  font-size: 35px;
+  font-size: 30px;
 }
 
-h5 {
-  margin:0;
-  font-size:35px; 
-  text-decoration:underline;
-}
 
 .instructions {
   font-size:18px;
@@ -114,10 +120,6 @@ footer.page-footer {
   text-align:left;
 }
 
-.container{
-  margin-top:10px;
-}
-
 #events {
   color: teal;
   z-index: 1;
@@ -126,4 +128,9 @@ footer.page-footer {
 .myEvent {
   width: 250px;
   height: 50px; 
+}
+
+footer.page-footer {
+  margin: 0;
+  text-align:left;
 }

@@ -1,39 +1,30 @@
-var eventLat=[];
-var eventLng=[];
-var dateSelector=[]
-var zipCode=[];
-var eventVenue=[];
-var eventName=[];
-var cityName=[];
-var locat="";
-var coords=[];
-var map;
-var latLng;
-var marker;
-var myLat;
-var myLng;
-var infoWindow;
-var pickedEvent=[];
-var pickedLat;
-var pickedLng;
-//====================Get a lyft click event==========================
-function clickMyEvent(){
-  $(".myEvent").on("click", function(){
-    $(this).replaceWith("<button id='lyft-web-button-parent'>");
-    // console.log("Id added");
-    pickedLat = ($(this).attr("data-LatValue"));
-    pickedLng = ($(this).attr("data-LngValue"));
-    console.log("My event latitude: " + pickedLat + "My event longitude: " + pickedLng);
-    displayLyft();
-    $("#lyft-web-button-parent").removeAttr("id");
-    console.log("Id removed");
-  });
-};
+//==============Global variables=================================
+//Input form variables
+var locat="";         //Form Event Location
+var date;             //Form Event Date
+var category;         //Form Event Category
+//variables from Ajax
+var eventLat=[];      //Event Lattidude Array
+var eventLng=[];      //Event Longitude Array
+var dateSelector=[]   //Event Date Array
+var eventVenue=[];    //Event Venue Array
+var eventName=[];     //Event Name Array
+var cityName=[];      //Event City Array
+//Map Variables
+var map;              //Map
+var latLng;           //Map API variable
+var marker;           //Map API marker
+var myLat;            //User Latitude
+var myLng;            //User Longitude
+var pickedEvent=[];   //Array of Event Buttons
+var pickedLat;        //Chosen Event Latitude
+var pickedLng;        //Chosen Event Longitude
+
 $(document).ready(function() {
   $("#event-date").material_select();
   $("#event-category").material_select();
 });
-//================== Lodash Error Handling ==================================
+//================== Lodash Error Handling =========================
 function parseLodash(str){
   return _.attempt(JSON.parse, str);
 };
@@ -47,11 +38,34 @@ span.onclick = function() {
 };
 //================== on-click AJAX Call ==================================
 function validateForm() {
+  //wait x seconds until the data from Ajax loads and then show the map
+  setTimeout(initMap, 10000);
+  // prevent event default behavior
+  event.preventDefault();
+  //Show modal if no location information is entered
   var x = document.forms["myForm"]["fname"].value;
   if (x == "") {
-      modal.style.display = "block";
-      return false;
-  }
+    modal.style.display = "block";
+    return false
+  }  
+  else {
+    //Search form Inputs  
+    locat=x; 
+    date = $("#event-date").val();
+    category = $("#event-category").val();
+    //Empty table before populating with new event information
+    $("#event-table").empty();
+    //Add table head back to table
+    var thead = $("<tr><th>Number</th><th>Date & Time</th><th>Name of Event</th><th>Venue</th><th>City Name</th></tr>");
+    $("#event-table").append(thead);
+//================  queryURL using $ajax ======================
+    var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events/search?app_key=54CPdHQQ4wTp4fM7&location=" + locat+ "&date="+ date + "&category" + category + "&limit=10";
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).done(function(response) {
+      for (var i=0; i<10; i++){
+    }
   else {
     locat=x;
     console.log("My location " + locat);
@@ -104,11 +118,12 @@ function validateForm() {
         if (_.isError(eventVenue[i])) {
           console.log('Error parsing JSON:', eventVenue[i]);
         }
-        //Event Name
+        //Print event name
         eventName[i]= parseLodash(response).events.event[i].title;
         if (_.isError(eventName[i])) {
           console.log('Error parsing JSON:', eventName[i]);
         }
+        //Print City name
         cityName[i] = JSON.parse(response).events.event[i].city_name;
         if (_.isError(cityName[i])) {
           console.log('Error parsing JSON:', cityName[i]);
@@ -119,6 +134,7 @@ function validateForm() {
           .append($("<td>" + eventName[i] + "</td>"))
           .append($("<td>" + eventVenue[i] + "</td>"))
           .append($("<td>" + cityName[i] + "</td>"))
+        //Create user buttons
         pickedEvent[i]=$("<button>").addClass("myEvent btn-large waves-effect waves-light teal lighten-1");
         pickedEvent[i].attr("id", "event" + [i]);
         pickedEvent[i].attr("data-LatValue", eventLat[i]);
@@ -129,12 +145,25 @@ function validateForm() {
       }; 
       clickMyEvent();
     });
-  };
+//====================Get a Lyft click event==========================
+function clickMyEvent(){
+  $(".myEvent").on("click", function(){
+    $(this).replaceWith("<button id='lyft-web-button-parent'>");
+    console.log("Id added");
+    pickedLat = ($(this).attr("data-LatValue"));
+    pickedLng = ($(this).attr("data-LngValue"));
+    console.log("My event latitude: " + pickedLat);
+    console.log("My event longitude: " + pickedLng);
+    displayLyft();
+    $("#lyft-web-button-parent").removeAttr("id");
+    console.log("Id removed");
+  });
 };
 //================== Display events on GoogleMap =============================
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
+    //Map centered on the location of the Event #1
     center: new google.maps.LatLng(eventLat[0], eventLng[0]),
   });
   for (var i=0; i<10; i++){
@@ -145,32 +174,35 @@ function initMap() {
   });
 };
 //================== Display current location on GoogleMap ====================
-  infoWindow = new google.maps.InfoWindow;
+  var infoWindow = new google.maps.InfoWindow;
   // HTML5 geolocation.
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
-      myLat = position.coords.latitude;
-      myLng = position.coords.longitude;
-      $("#myLat").html("My location latitude: " + myLat);
-      $("#myLng").html("My location longitude: " + myLng);
-      //======this shows My location on the map
-      infoWindow.setPosition(pos);
-      infoWindow.setContent('Location found.');
-      infoWindow.open(map);
-      map.setCenter(pos);
-    }, function() {
-      handleLocationError(true, infoWindow, map.getCenter());
-    });
+  navigator.geolocation.getCurrentPosition(function(position) {
+    var pos = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    };
+    myLat = position.coords.latitude;
+    myLng = position.coords.longitude;
+    $("#myLat").html("My location latitude: " + myLat);
+    $("#myLng").html("My location longitude: " + myLng);
+    console.log("My location latitude: " + myLat);
+    console.log("My location longitude: " + myLng);
+    //======this shows My location on the map
+    infoWindow.setPosition(pos);
+    infoWindow.setContent('Location found.');
+    infoWindow.open(map);
+    map.setCenter(pos);
+  }, function() {
+    handleLocationError(true, infoWindow, map.getCenter());
+  });
   } else {
     // when Browser doesn't support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
   };  
 };
-//Checking if information from the maps is available after x seconds 
+//Checking if the information from the maps is available after x seconds
+/* 
 function getMapCoor() {
   console.log("My event lattitude = " + pickedLat);
   console.log("My event longitude = " + pickedLng);
@@ -178,6 +210,7 @@ function getMapCoor() {
   console.log("My longitude = " + myLng);
 };
 setTimeout(getMapCoor, 20000);
+*/
 //===================  Lyft API and AJAX request ========================
 function displayLyft(){
   var OPTIONS = {
