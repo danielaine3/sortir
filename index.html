@@ -62,12 +62,31 @@
 
   <div class="container z-depth-3">
     <div id="event-view">
-      <form class="col s12 m4" name="myForm" action="" onsubmit="return validateForm()" method="post">
+      <form class="col s12 m4" id="search-form" name="myForm" action="" onsubmit="return validateForm()" method="post">
+
+        <!-- MODAL FOR FORM VALIDATION -->
+
+        <div id="myModal" class="modal">
+         <div class="modal-content">
+           <div class="modal-header">
+             <span class="close"><h4>&times;</h4></span>
+           </div>
+           <div class="modal-body">
+             <div class="container">
+                 <div class="row center">
+                   <div class="col  s12 light">
+                     <h4 class="header">Please enter the location of the event!</h4>
+                   </div>
+                 </div>
+               </div>
+           </div>
+         </div>
+        </div>
 
         <!-- City Search Input -->
         <div class="row">
           <div class="input-field col s4">
-            Enter a City
+            <label>Enter a City:</label>
             <input type="text"  name="fname">
           </div>
 
@@ -75,6 +94,8 @@
 
           <div class="input-field col s4">
             <select class="Drop-down" id="event-date">
+              <!--default date set up for Today-->
+              <option value="Today" selected>Choose a date</option>
               <option value="Today">Today</option>
               <option value="Tomorrow">Tomorrow</option>
               <option value= "This Week">This Week</option>
@@ -104,9 +125,9 @@
             <label>Select Categories:</label>
           </div>
         </div>
-        
+        <div class="row center-align">
           <input class="btn-large waves-effect waves-light teal lighten-1"  type="submit"  value="Submit">
-       
+        </div>
       </form>
     </div>
   </div> 

@@ -55,6 +55,13 @@ p {
 
 }
 
+#myModal {
+  z-index: 4;
+  width: 900px;
+  color: white;
+  background: grey;
+}
+
 .parallax-container {
   min-height: 380px;
   line-height: 0;

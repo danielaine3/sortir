@@ -36,13 +36,24 @@ $(document).ready(function() {
 //================== Lodash Error Handling ==================================
 function parseLodash(str){
   return _.attempt(JSON.parse, str);
+
 }
+
+// ================Validation Modal==================
+var modal = document.getElementById('myModal');
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+   modal.style.display = "none";
+}
+
 //================== on-click AJAX Call ==================================
 function validateForm() {
   var x = document.forms["myForm"]["fname"].value;
   
   if (x == "") {
-      alert("Location must be filled out");
+      modal.style.display = "block";
       return false;
     }
     
@@ -216,3 +227,7 @@ function displayLyft(){
   }, c.src = t.scriptSrc, a.insertBefore(c, a.childNodes[0])
   }).call(this, OPTIONS);
 };
+
+
+
+
