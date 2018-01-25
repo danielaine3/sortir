@@ -20,7 +20,7 @@ var pickedLng;
 function clickMyEvent(){
   $(".myEvent").on("click", function(){
     $(this).replaceWith("<button id='lyft-web-button-parent'>");
-    console.log("Id added");
+    // console.log("Id added");
     pickedLat = ($(this).attr("data-LatValue"));
     pickedLng = ($(this).attr("data-LngValue"));
     console.log("My event latitude: " + pickedLat + "My event longitude: " + pickedLng);
@@ -60,7 +60,7 @@ function validateForm() {
   else {
 
   locat=x;
-  alert("My location " + locat);
+  console.log("My location " + locat);
 
 
   // prevent event default behavior
@@ -70,9 +70,9 @@ function validateForm() {
   //=============== Search Form Inputs  ============================
  
   var date = $("#event-date").val();
-  alert("You chose" + date);
+  // console.log("You chose" + date);
   var category = $("#event-category").val();
-  alert("You chose"+category)
+  console.log("You chose"+category);
   //============ Search Form Jquery Menus  =========================
   
   //Empty table before populating with new event information
@@ -93,7 +93,7 @@ function validateForm() {
       }
       //Find Longitude and Latitude of the event
       eventLat[i] = parseLodash(response).events.event[i].latitude;
-      // console.log("Lat of event " + [i+1] + " = " + eventLat[i]);
+      console.log("Lat of event " + [i+1] + " = " + eventLat[i]);
       if (_.isError(eventLat[i])) {
         console.log('Error parsing JSON:', eventLat[i]);
       }
