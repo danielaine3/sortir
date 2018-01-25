@@ -20,7 +20,11 @@ function clickMyEvent(){
   $(".myEvent").on("click", function() {
       pickedLat = ($(this).attr("data-LatValue"));
       pickedLng = ($(this).attr("data-LngValue"));
-      alert("My event latitude: " + pickedLat + "My event longitude: " + pickedLng);
+      console.log("My event latitude: " + pickedLat + "My event longitude: " + pickedLng);
+      // ($(this).attr("id", "lyft-web-button-parent"));
+      $(this).replaceWith("<button id='lyft-web-button-parent'>");
+      // console.log("Lyft button ID added");
+      displayLyft();
   });
 }
 
@@ -40,37 +44,31 @@ $("#find-event").on("click", function(event) {
   //wait x seconds until the data from Ajax loads and then show the map
   setTimeout(initMap, 4000);
 //=============== Search Form Inputs  ============================
-
 var location = $("#location-input").val().trim();
 //console.log(location);
-
 var date = $("#event-date").val();
 //alert("You chose" + date);
-
 var category = $("#event-category").val();
 console.log(category)
-
-
 //============ Search Form Jquery Menus  =========================
 // //Empty form before next search
 // $(".input-field").clear();
 //Empty table before populating with new event information
 $("#event-table").empty();
+//Add table head back to table
+var thead = $("<tr><th>Number</th><th>Date & Time</th><th>Name of Event</th><th>Venue</th><th>City Name</th></tr>");
+$("#event-table").append(thead);
 // ================  queryURL using $ajax ======================
 var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events/search?app_key=54CPdHQQ4wTp4fM7&location=" + location+ "&date="+ date + "&category" + category + "&limit=10";
   $.ajax({
     url: queryURL,
     method: "GET"
   }).done(function(response) {
-    
-    for (var i=0; i<5; i++){
-
-      // console.log(JSON.parse(response));
+    for (var i=0; i<10; i++){
       var event = parseLodash(response);
       if (_.isError(event)) {
         console.log('Error parsing JSON:', event);
       }
-
       //Find Longitude and Latitude of the event
       eventLat[i] = parseLodash(response).events.event[i].latitude;
       // console.log("Lat of event " + [i+1] + " = " + eventLat[i]);
@@ -78,67 +76,55 @@ var queryURL = "https://cors-anywhere.herokuapp.com/api.eventful.com/json/events
         console.log('Error parsing JSON:', eventLat[i]);
       }
       eventLat.push(eventLat[i]);
-
       eventLng[i] = parseLodash(response).events.event[i].longitude;
       if (_.isError(eventLng[i])) {
         console.log('Error parsing JSON:', eventLng[i]);
       }
-      // console.log("Lng of event " + [i+1] + " = " + eventLng[i]);
       eventLng.push(eventLng[i]);
-
       //================ Table Population ===============================
       //Print date
       dateSelector[i] = parseLodash(response).events.event[i].start_time;
       if (_.isError(dateSelector[i])) {
         console.log('Error parsing JSON:', dateSelector[i]);
       }
-
       //Print URL of the event -CHANGE TO LINK?
       eventVenue[i]= parseLodash(response).events.event[i].venue_name;
       if (_.isError(eventVenue[i])) {
         console.log('Error parsing JSON:', eventVenue[i]);
       }
-    
       //Event Name
       eventName[i]= parseLodash(response).events.event[i].title;
       if (_.isError(eventName[i])) {
         console.log('Error parsing JSON:', eventName[i]);
       }
-
       cityName[i] = JSON.parse(response).events.event[i].city_name;
       if (_.isError(cityName[i])) {
         console.log('Error parsing JSON:', cityName[i]);
       }
-      
+
+      // var thead = $("<tr><th>Number</th><th>Date & Time</th><th>Name of Event</th><th>Venue</th><th>City Name</th></tr>");
       var row = $("<tr class='event-row'>")
         .append($("<td>" + [i+1] + "</td>"))
         .append ($("<td>" + dateSelector[i] + "</td>"))
         .append($("<td>" + eventName[i] + "</td>"))
         .append($("<td>" + eventVenue[i] + "</td>"))
         .append($("<td>" + cityName[i] + "</td>"))
-        // .append($("<td>" + [i+1] + "</td>"));
-
-      pickedEvent[i]=$("<button>").addClass("myEvent");
+      pickedEvent[i]=$("<button>").addClass("myEvent btn-large waves-effect waves-light teal lighten-1");
+      pickedEvent[i].attr("id", "event" + [i]);
       pickedEvent[i].attr("data-LatValue", eventLat[i]);
       pickedEvent[i].attr("data-LngValue", eventLng[i]);
-      pickedEvent[i].text("Go to #" + (i+1) + " event");
+      pickedEvent[i].text("Get a Lyft!");
       row.append($("<td>").append(pickedEvent[i]));
       $("#event-table").append(row);
     }; 
-    
     clickMyEvent();
   });
-  //print arrays of Lattitude and Longitude
-  // console.log("Latitude array = " + eventLat);
-  // console.log("Longitude array = " + eventLng);
 });
-
 //================== Display events on GoogleMap =============================
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 10,
     center: new google.maps.LatLng(eventLat[0], eventLng[0]),
-    //mapTypeId: 'terrain'
   });
   for (var i=0; i<5; i++){
   latLng = new google.maps.LatLng(eventLat[i], eventLng[i]);
@@ -181,7 +167,6 @@ function getMapCoor() {
   console.log("My longitude = " + myLng);
   };
 setTimeout(getMapCoor, 20000);
-
 //===================  Lyft API and AJAX request ========================
 function displayLyft(){
   var OPTIONS = {
@@ -203,7 +188,7 @@ function displayLyft(){
     queryParams: {
       credits: ''
     },
-    theme: 'multicolor large',
+    theme: 'multicolor medium',
   };
   (function(t) {
     var n = this.window,
@@ -218,15 +203,3 @@ function displayLyft(){
   }, c.src = t.scriptSrc, a.insertBefore(c, a.childNodes[0])
   }).call(this, OPTIONS);
 };
-//Display fare estimate to page
-//=======================
- setTimeout(displayLyft, 22000);
-
- //Display fare estimate in button once user selects an event from table
- //======================
-// $(".myEvent").on("click", function(){
-//   $("#lyft-web-button-parent").empty();
-//   console.log("Div Emptied");
-//   displayLyft();
-// });
-
